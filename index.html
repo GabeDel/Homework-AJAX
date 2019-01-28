@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- MAKE AN ID CALLED "BUTTONS / <DIV ID="BUTTONS"> -->
+
+  
+ <meta charset="utf-8">
+    <title>Favorite Movies</title>
+    <style type="text/css">
+      button,
+      div,
+      form,
+      input {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  
+  <body>
+  
+    <div class="container">
+      <h1>Animals</h1>
+  
+   
+      <div id="animal-view"></div>
+  
+      <form id="animal-form">
+        <label for="animal-input">Add an Animal</label>
+        <input type="text" id="animal-input"><br>
+  
+        <!-- Button triggers new movie to be added -->
+        <input id="add-animal" type="submit" value="add an animal">
+      </form>
+  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript">
+   
+        var animals = ["Shark", "Lion", "Cat", "Dog"];
+        
+        function renderButtons() {
+        
+          $("#animals-view").empty();
+          
+          for (var i = 0; i < animals.length; i++) {
+          
+            var a = $("<button>");
+            
+            a.addClass("animal");
+           
+            a.attr("data-name", animals[i]);
+           
+            a.text(animals[i]);
+           
+            $("#animal-view").append(a);
+          }
+        }
+
+
+    //  when one button is clicked
+        $("#add-animal").on("click", function(event) {
+         
+          event.preventDefault();
+         
+          var animal= $("#animal-input").val().trim();
+          
+          animals.push(animal);
+          
+          renderButtons();
+        });
+       
+        renderButtons();
+
+        // creating an  onclick the "button"
+    $("button").on("click", function() {
+      var animalA = $(this).attr("data-person");
+      var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=&q=" +
+        Animal + "&limit=10&offset=0&rating=G&lang=en";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        .then(function(response) {
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div>");
+
+            var rating = results[i].rating;
+
+            var p = $("<p>").text("Rating: " + rating);
+
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+        });
+    });
+      </script>
+    </div>
+  </body>
+  
+  </html>
